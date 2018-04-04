@@ -1,9 +1,15 @@
 const querystring = require('querystring');
 const fetch = require('node-fetch');
+const util = require('util');
+const fs = require('fs');
+
+const asyncWriteFile = util.promisify(fs.writeFile);
 
 const baseApiUri = 'https://api.twitch.tv/helix';
 const clientId = process.env.CLIENT_ID;
 const userId = process.env.USER_ID;
+const followerCountFilename = process.env.FOLLOWER_COUNT_FILENAME;
+const lastFollowerFilename = process.env.LAST_FOLLOWER_FILENAME;
 
 const fetchFollowersForUserId = async (userId) => {
   const headers = {
@@ -50,10 +56,13 @@ const fetchFollowersForUserId = async (userId) => {
   };
 };
 
+const saveFollowerStatsToFile = async ({totalFollowers, lastFollowerDisplayName}) => {
+  asyncWriteFile(followerCountFilename, totalFollowers);
+  asyncWriteFile(lastFollowerFilename, lastFollowerDisplayName);
+};
+
 fetchFollowersForUserId(userId)
-  .then((returnValue) => {
-    console.log(returnValue);
-  })
+  .then(saveFollowerStatsToFile)
   .catch((err) => {
     console.log(err);
   });
