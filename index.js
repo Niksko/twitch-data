@@ -8,8 +8,9 @@ const asyncWriteFile = util.promisify(fs.writeFile);
 const baseApiUri = 'https://api.twitch.tv/helix';
 const clientId = process.env.CLIENT_ID;
 const userId = process.env.USER_ID;
-const followerCountFilename = process.env.FOLLOWER_COUNT_FILENAME;
-const lastFollowerFilename = process.env.LAST_FOLLOWER_FILENAME;
+const followerCountFilename = process.env.FOLLOWER_COUNT_FILENAME || 'followercount.txt';
+const lastFollowerFilename = process.env.LAST_FOLLOWER_FILENAME || 'lastfollower.txt';
+const pollIntervalMs = process.env.POLL_INTERVAL_MS || 15000;
 
 const fetchFollowersForUserId = async (userId) => {
   const headers = {
@@ -61,8 +62,11 @@ const saveFollowerStatsToFile = async ({totalFollowers, lastFollowerDisplayName}
   asyncWriteFile(lastFollowerFilename, lastFollowerDisplayName);
 };
 
-fetchFollowersForUserId(userId)
-  .then(saveFollowerStatsToFile)
-  .catch((err) => {
-    console.log(err);
-  });
+setInterval(() => {
+  fetchFollowersForUserId(userId)
+    .then(saveFollowerStatsToFile)
+    .then(() => { console.log('updated follower stats'); })
+    .catch((err) => {
+      console.log(err);
+    });
+}, pollIntervalMs);
