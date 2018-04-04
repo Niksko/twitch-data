@@ -1,0 +1,7 @@
+version: '3'
+services:
+  twitch-follower-update:
+    build: .
+    volumes:
+      - ./output:/output
+    env_file: .env
