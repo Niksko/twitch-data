@@ -58,8 +58,8 @@ const fetchFollowersForUserId = async (userId) => {
 };
 
 const saveFollowerStatsToFile = async ({totalFollowers, lastFollowerDisplayName}) => {
-  asyncWriteFile(followerCountFilename, totalFollowers);
-  asyncWriteFile(lastFollowerFilename, lastFollowerDisplayName);
+  asyncWriteFile(followerCountFilename, `Followers: ${totalFollowers}`);
+  asyncWriteFile(lastFollowerFilename, `Latest follower: ${lastFollowerDisplayName}`);
 };
 
 setInterval(() => {
