@@ -3,5 +3,5 @@ services:
   twitch-follower-update:
     build: .
     volumes:
-      - ./output:/output
+      - /home/niksko/Twitch/Data:/output
     env_file: .env
