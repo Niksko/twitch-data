@@ -18,7 +18,7 @@ const fetchFollowersForUserId = async (userId) => {
   };
 
   const followersRequestQueryParameters = {
-    'from_id': userId
+    'to_id': userId
   };
 
   const fetchFollowersPath = '/users/follows?' + querystring.encode(followersRequestQueryParameters);
@@ -32,7 +32,7 @@ const fetchFollowersForUserId = async (userId) => {
   const followersResponseJson = await followersResponse.json();
 
   const totalFollowers = followersResponseJson.total;
-  const userIdOfLastFollower = followersResponseJson.data[0].to_id;
+  const userIdOfLastFollower = followersResponseJson.data[0].from_id;
 
   const usersRequestQueryParameters = {
     'id': userIdOfLastFollower
