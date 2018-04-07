@@ -18,3 +18,4 @@ with the API
 that will contain the follower count
 * `LAST_FOLLOWER_FILENAME`: The path inside the container to the file
 that will contain the last follower's name
+* `POLL_INTERVAL_MS`: The polling frequency in 'ms' to run the application. Defaults to 15000ms
