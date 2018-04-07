@@ -1,10 +1,20 @@
 # twitch-data
 
-* Grab data from the Twitch API so that I can display latest follower
-and follow count
-* Written using node, hopefully using some async-await coolness
-* Runs in a docker container so that I don't pollute my env
-* Outputs to a text file, so that OBS can grab it and display it
-* Don't hit Twitch API rate limits
+A small application to grab my latest follower and follower count from
+the Twitch API and output to files, for display on my stream
 
-210043624
+# Instructions
+
+Start the application with `docker-compose start`
+
+# Environment variables
+
+Environment variables are stored in the `.env` file.
+Currently available variables:
+* `USER_ID`: Determines which user to fetch followers for
+* `CLIENT_ID`: The Twitch API application client id, required to interact
+with the API
+* `FOLLOWER_COUNT_FILENAME`: The path inside the container to the file
+that will contain the follower count
+* `LAST_FOLLOWER_FILENAME`: The path inside the container to the file
+that will contain the last follower's name
